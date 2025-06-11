@@ -10,7 +10,7 @@ st.title(":cup_with_straw: Customize Your Smoothie!"":cup_with_straw: ")
 st.write(
     """ Choose the fruits you want to have in your Smoothie! 
     """)
-from snowflake.snowpark.functions import col
+
 
 cnx = st.connection("snowflake")
 session = cnx.session()
@@ -22,7 +22,7 @@ my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT
 #st.dataframe(data=my_dataframe, use_container_width=True)
 #st.stop()
 pd_df = my_dataframe.to_pandas()
-#st.dataframe(pd_df)
+st.dataframe(pd_df)
 #st.stop()
 
 # list data type
@@ -50,12 +50,12 @@ if ingredients_list:
                 values ('"""\
                 + ingredients_string + """','""" + name_on_order + """'
                 )"""
-    st.write(my_insert_stmt)
+    #st.write(my_insert_stmt)
     # st.stop()
     
     time_to_insert = st.button('Submit Order')
         
-    st.write(my_insert_stmt)
+    #st.write(my_insert_stmt)
     
     if time_to_insert:
         session.sql(my_insert_stmt).collect()
